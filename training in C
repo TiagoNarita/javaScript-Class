@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <locale.h>
+
+int main() {
+    setlocale(LC_ALL, "Portuguese");
+    int opcao, i = 0,vendas[100],totalvendas = 0, dadosMaiorVenda, dadosMenorVenda;
+    float preco[100], lucrototal = 0, maiorVenda = -1, menorVenda = 1000000000000;
+    char categoria[100], pagamento[100], escolhaPagamento;
+
+    do{
+        printf("\n1. Cadastrar nova venda.\n");
+        printf("2. Listar todas as vendas realizadas.\n");
+        printf("3. Listar vendas por categoria.\n");
+        printf("4. Apresentar o total de vendas realizadas, dado um tipo de pagamento selecionado.\n");
+        printf("5. Apresentar o lucro total das vendas.\n");
+        printf("6. Apresentar os dados da maior venda realizada.\n");
+        printf("7. Apresentar os dados da menor venda realizada via PIX.\n");
+        printf("8. Sair.\n\n");
+
+        printf("Escolha uma das opcções: ");
+        scanf("%i",& opcao);
+
+        switch (opcao){
+            case 1:
+                 system("cls");
+                printf("venda: %i\n", i + 1);
+
+                do{
+                    printf("Digite o valor da venda: ");
+                    scanf("%f", & preco[i]);
+                }while(preco[i]<0);
+
+                do{
+                printf("Digite a categoria do produto vendido (A, B ou C):");
+                scanf(" %c", & categoria[i]);
+                }while(categoria[i]!= 'A' && categoria[i] != 'a' && categoria[i] != 'B' && categoria[i] != 'b' && categoria[i] != 'c' && categoria[i] != 'C');
+
+                do{
+                printf("Escolha a forma de pagamento (D - débito, C - crédito ou P - pix):");
+                scanf(" %c", & pagamento[i]);
+                }while(pagamento[i]!= 'D' && pagamento[i]!= 'd' && pagamento[i]!= 'C' && pagamento[i]!= 'c' && pagamento[i]!= 'P' && pagamento[i]!= 'p');
+                i++;
+            break;
+            case 2:
+                 system("cls");
+                for(int count = 0; count<i ; count++){
+                    printf("venda%i\n", count+1);
+                    printf("valor da venda: %f\n",preco[count]);
+                    printf("Categoria do produto: %c \n", categoria[count]);
+                    printf("Forma de pagamento: %c \n\n", pagamento[count]);
+                }
+            break;
+            case 3:
+                system("cls");
+                for(int count = 0; count <i; count++){
+                    if(categoria[count] == 'A' || categoria [count]== 'a'){
+                        printf("Categoria A: \n\n");
+                        printf("venda%i\n", count+1);
+                        printf("valor da venda: %f\n",preco[count]);
+                        printf("Categoria do produto: %c \n", categoria[count]);
+                        printf("Forma de pagamento: %c \n\n", pagamento[count]);
+                    }
+                }
+                for(int count = 0; count <i; count++){
+                    if(categoria[count] == 'B' || categoria [count]== 'b'){
+                        printf("Categoria B: \n\n");
+                        printf("venda%i\n", count+1);
+                        printf("valor da venda: %f\n",preco[count]);
+                        printf("Categoria do produto: %c \n", categoria[count]);
+                        printf("Forma de pagamento: %c \n\n", pagamento[count]);
+                    }
+                }
+                 for(int count = 0; count <i; count++){
+                    if(categoria[count] == 'C' || categoria [count]== 'c'){
+                        printf("Categoria C: \n\n");
+                        printf("venda%i\n", count+1);
+                        printf("valor da venda: %.2f\n",preco[count]);
+                        printf("Categoria do produto: %c \n", categoria[count]);
+                        printf("Forma de pagamento: %c \n\n", pagamento[count]);
+                    }
+                }
+                break;
+                case 4:
+                    system("cls");
+                    printf("Escolha um dos tipos de pagamentos para visualização:(D - débito, C - crédito ou P - pix)");
+                    scanf(" %c",& escolhaPagamento);
+                    totalvendas = 0;
+
+                    if(escolhaPagamento=='D' || escolhaPagamento == 'd'){
+                        for(int count = 0; count<i;count ++){
+                            if(pagamento[count] == 'D' || pagamento[count] == 'd'){
+                                totalvendas++;
+                            }
+                        }
+                        printf("O total de vendas realizadas no débito foi: %i\n\n", totalvendas);
+                    }
+                    if(escolhaPagamento=='C' || escolhaPagamento == 'c'){
+                        for(int count = 0; count<i;count ++){
+                            if(pagamento[count] == 'C' || pagamento[count] == 'c'){
+                                totalvendas++;
+                            }
+                        }
+                        printf("O total de vendas realizadas no crédito foi: %i\n\n", totalvendas);
+                    }
+                    if(escolhaPagamento=='P' || escolhaPagamento == 'p'){
+                        for(int count = 0; count<i;count ++){
+                            if(pagamento[count] == 'P' || pagamento[count] == 'p'){
+                                totalvendas++;
+                            }
+                        }
+                        printf("O total de vendas realizadas no pix foi: %i\n\n", totalvendas);
+                    }
+                break;
+                case 5:
+                    system("cls");
+                    lucrototal = 0;
+                    system("cls");
+                    for(int count= 0; count<i; count++){
+                        lucrototal = lucrototal + preco[count];
+                    }
+                    printf("O lucro total das vendas foi de: %.2f\n\n", lucrototal);
+                break;
+                case 6:
+                    system("cls");
+                    for(int count = 0; count<i ; count ++){
+                        if(maiorVenda < preco[count]){
+                            maiorVenda = preco[count];
+                            dadosMaiorVenda = count;
+                        }
+                    }
+                    printf("A maior venda foi:\n");
+                    printf("venda %i\n", dadosMaiorVenda+1);
+                    printf("valor da venda: %f\n",preco[dadosMaiorVenda]);
+                    printf("Categoria do produto: %c \n", categoria[dadosMaiorVenda]);
+                    printf("Forma de pagamento: %c \n\n", pagamento[dadosMaiorVenda]);
+                break;
+                case 7:
+                    system("cls");
+                    for(int c = 0; c<i;c ++){
+                            if(pagamento[c] == 'P' || pagamento[c] == 'p'){
+                                        if(menorVenda > preco[c]){
+                                            menorVenda = preco[c];
+                                            dadosMenorVenda = c;
+                                        }
+                            }
+                    }
+                    if(i == 0){
+                        printf("Nenhuma venda PIX foi realizada ainda.\n\n");
+                    }
+                    else{
+                        printf("A menor venda realizada no pix foi:\n");
+                        printf("venda %i\n", dadosMenorVenda + 1);
+                        printf("valor da venda: %f\n",preco[dadosMenorVenda]);
+                        printf("Categoria do produto: %c \n", categoria[dadosMenorVenda]);
+                        printf("Forma de pagamento: %c \n\n", pagamento[dadosMenorVenda]);
+                    }
+        }
+
+    }while(opcao != 8);
+
+    return 0;
+}
